@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzhl.plate.mapper.PlateRecordDAO">
+  <resultMap id="BaseResultMap" type="com.jzhl.plate.model.PlateRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="license" jdbcType="VARCHAR" property="license" />
+    <result column="vip" jdbcType="VARCHAR" property="vip" />
+    <result column="i_serialno" jdbcType="VARCHAR" property="iSerialno" />
+    <result column="o_serialno" jdbcType="VARCHAR" property="oSerialno" />
+    <result column="i_time" jdbcType="TIMESTAMP" property="iTime" />
+    <result column="o_time" jdbcType="TIMESTAMP" property="oTime" />
+    <result column="i_image" jdbcType="VARCHAR" property="iImage" />
+    <result column="i_image_fragment" jdbcType="VARCHAR" property="iImageFragment" />
+    <result column="o_image" jdbcType="VARCHAR" property="oImage" />
+    <result column="o_image_fragment" jdbcType="VARCHAR" property="oImageFragment" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="in_out" jdbcType="CHAR" property="inOut" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="is_del" jdbcType="CHAR" property="isDel" />
+    <result column="build_time" jdbcType="TIMESTAMP" property="buildTime" />
+    <result column="pay_no" jdbcType="VARCHAR" property="payNo" />
+    <result column="he_id" jdbcType="INTEGER" property="heId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, license, vip, i_serialno, o_serialno, i_time, o_time, i_image, i_image_fragment, 
+    o_image, o_image_fragment, money, in_out, `status`, is_del, build_time, pay_no, he_id, 
+    remark, company_id
+  </sql>
+  <select id="selectByExample" parameterType="com.jzhl.plate.model.PlateRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plate_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from plate_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from plate_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jzhl.plate.model.PlateRecordExample">
+    delete from plate_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jzhl.plate.model.PlateRecord">
+    insert into plate_record (id, license, vip, 
+      i_serialno, o_serialno, i_time, 
+      o_time, i_image, i_image_fragment, 
+      o_image, o_image_fragment, money, 
+      in_out, `status`, is_del, build_time, 
+      pay_no, he_id, remark, 
+      company_id)
+    values (#{id,jdbcType=INTEGER}, #{license,jdbcType=VARCHAR}, #{vip,jdbcType=VARCHAR}, 
+      #{iSerialno,jdbcType=VARCHAR}, #{oSerialno,jdbcType=VARCHAR}, #{iTime,jdbcType=TIMESTAMP}, 
+      #{oTime,jdbcType=TIMESTAMP}, #{iImage,jdbcType=VARCHAR}, #{iImageFragment,jdbcType=VARCHAR}, 
+      #{oImage,jdbcType=VARCHAR}, #{oImageFragment,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, 
+      #{inOut,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{isDel,jdbcType=CHAR}, #{buildTime,jdbcType=TIMESTAMP}, 
+      #{payNo,jdbcType=VARCHAR}, #{heId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{companyId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jzhl.plate.model.PlateRecord">
+    insert into plate_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="license != null">
+        license,
+      </if>
+      <if test="vip != null">
+        vip,
+      </if>
+      <if test="iSerialno != null">
+        i_serialno,
+      </if>
+      <if test="oSerialno != null">
+        o_serialno,
+      </if>
+      <if test="iTime != null">
+        i_time,
+      </if>
+      <if test="oTime != null">
+        o_time,
+      </if>
+      <if test="iImage != null">
+        i_image,
+      </if>
+      <if test="iImageFragment != null">
+        i_image_fragment,
+      </if>
+      <if test="oImage != null">
+        o_image,
+      </if>
+      <if test="oImageFragment != null">
+        o_image_fragment,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="inOut != null">
+        in_out,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="buildTime != null">
+        build_time,
+      </if>
+      <if test="payNo != null">
+        pay_no,
+      </if>
+      <if test="heId != null">
+        he_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="license != null">
+        #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="vip != null">
+        #{vip,jdbcType=VARCHAR},
+      </if>
+      <if test="iSerialno != null">
+        #{iSerialno,jdbcType=VARCHAR},
+      </if>
+      <if test="oSerialno != null">
+        #{oSerialno,jdbcType=VARCHAR},
+      </if>
+      <if test="iTime != null">
+        #{iTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oTime != null">
+        #{oTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iImage != null">
+        #{iImage,jdbcType=VARCHAR},
+      </if>
+      <if test="iImageFragment != null">
+        #{iImageFragment,jdbcType=VARCHAR},
+      </if>
+      <if test="oImage != null">
+        #{oImage,jdbcType=VARCHAR},
+      </if>
+      <if test="oImageFragment != null">
+        #{oImageFragment,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="inOut != null">
+        #{inOut,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=CHAR},
+      </if>
+      <if test="buildTime != null">
+        #{buildTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payNo != null">
+        #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="heId != null">
+        #{heId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jzhl.plate.model.PlateRecordExample" resultType="java.lang.Long">
+    select count(*) from plate_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update plate_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.license != null">
+        license = #{record.license,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vip != null">
+        vip = #{record.vip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iSerialno != null">
+        i_serialno = #{record.iSerialno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oSerialno != null">
+        o_serialno = #{record.oSerialno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iTime != null">
+        i_time = #{record.iTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.oTime != null">
+        o_time = #{record.oTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.iImage != null">
+        i_image = #{record.iImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iImageFragment != null">
+        i_image_fragment = #{record.iImageFragment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oImage != null">
+        o_image = #{record.oImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oImageFragment != null">
+        o_image_fragment = #{record.oImageFragment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null">
+        money = #{record.money,jdbcType=DECIMAL},
+      </if>
+      <if test="record.inOut != null">
+        in_out = #{record.inOut,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.isDel != null">
+        is_del = #{record.isDel,jdbcType=CHAR},
+      </if>
+      <if test="record.buildTime != null">
+        build_time = #{record.buildTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payNo != null">
+        pay_no = #{record.payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.heId != null">
+        he_id = #{record.heId,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update plate_record
+    set id = #{record.id,jdbcType=INTEGER},
+      license = #{record.license,jdbcType=VARCHAR},
+      vip = #{record.vip,jdbcType=VARCHAR},
+      i_serialno = #{record.iSerialno,jdbcType=VARCHAR},
+      o_serialno = #{record.oSerialno,jdbcType=VARCHAR},
+      i_time = #{record.iTime,jdbcType=TIMESTAMP},
+      o_time = #{record.oTime,jdbcType=TIMESTAMP},
+      i_image = #{record.iImage,jdbcType=VARCHAR},
+      i_image_fragment = #{record.iImageFragment,jdbcType=VARCHAR},
+      o_image = #{record.oImage,jdbcType=VARCHAR},
+      o_image_fragment = #{record.oImageFragment,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DECIMAL},
+      in_out = #{record.inOut,jdbcType=CHAR},
+      `status` = #{record.status,jdbcType=CHAR},
+      is_del = #{record.isDel,jdbcType=CHAR},
+      build_time = #{record.buildTime,jdbcType=TIMESTAMP},
+      pay_no = #{record.payNo,jdbcType=VARCHAR},
+      he_id = #{record.heId,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jzhl.plate.model.PlateRecord">
+    update plate_record
+    <set>
+      <if test="license != null">
+        license = #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="vip != null">
+        vip = #{vip,jdbcType=VARCHAR},
+      </if>
+      <if test="iSerialno != null">
+        i_serialno = #{iSerialno,jdbcType=VARCHAR},
+      </if>
+      <if test="oSerialno != null">
+        o_serialno = #{oSerialno,jdbcType=VARCHAR},
+      </if>
+      <if test="iTime != null">
+        i_time = #{iTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oTime != null">
+        o_time = #{oTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iImage != null">
+        i_image = #{iImage,jdbcType=VARCHAR},
+      </if>
+      <if test="iImageFragment != null">
+        i_image_fragment = #{iImageFragment,jdbcType=VARCHAR},
+      </if>
+      <if test="oImage != null">
+        o_image = #{oImage,jdbcType=VARCHAR},
+      </if>
+      <if test="oImageFragment != null">
+        o_image_fragment = #{oImageFragment,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="inOut != null">
+        in_out = #{inOut,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=CHAR},
+      </if>
+      <if test="buildTime != null">
+        build_time = #{buildTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payNo != null">
+        pay_no = #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="heId != null">
+        he_id = #{heId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jzhl.plate.model.PlateRecord">
+    update plate_record
+    set license = #{license,jdbcType=VARCHAR},
+      vip = #{vip,jdbcType=VARCHAR},
+      i_serialno = #{iSerialno,jdbcType=VARCHAR},
+      o_serialno = #{oSerialno,jdbcType=VARCHAR},
+      i_time = #{iTime,jdbcType=TIMESTAMP},
+      o_time = #{oTime,jdbcType=TIMESTAMP},
+      i_image = #{iImage,jdbcType=VARCHAR},
+      i_image_fragment = #{iImageFragment,jdbcType=VARCHAR},
+      o_image = #{oImage,jdbcType=VARCHAR},
+      o_image_fragment = #{oImageFragment,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      in_out = #{inOut,jdbcType=CHAR},
+      `status` = #{status,jdbcType=CHAR},
+      is_del = #{isDel,jdbcType=CHAR},
+      build_time = #{buildTime,jdbcType=TIMESTAMP},
+      pay_no = #{payNo,jdbcType=VARCHAR},
+      he_id = #{heId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

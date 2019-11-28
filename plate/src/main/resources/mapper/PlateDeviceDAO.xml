@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzhl.plate.mapper.PlateDeviceDAO">
+  <resultMap id="BaseResultMap" type="com.jzhl.plate.model.PlateDevice">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="he_id" jdbcType="INTEGER" property="heId" />
+    <result column="dev_district_id" jdbcType="INTEGER" property="devDistrictId" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="device_desc" jdbcType="VARCHAR" property="deviceDesc" />
+    <result column="device_serial" jdbcType="VARCHAR" property="deviceSerial" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="port" jdbcType="INTEGER" property="port" />
+    <result column="serialno" jdbcType="VARCHAR" property="serialno" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="pass_wd" jdbcType="VARCHAR" property="passWd" />
+    <result column="channel_num" jdbcType="INTEGER" property="channelNum" />
+    <result column="heart_time" jdbcType="TIMESTAMP" property="heartTime" />
+    <result column="in_out" jdbcType="INTEGER" property="inOut" />
+    <result column="longitude" jdbcType="DECIMAL" property="longitude" />
+    <result column="latitude" jdbcType="DECIMAL" property="latitude" />
+    <result column="online" jdbcType="CHAR" property="online" />
+    <result column="reserve_one" jdbcType="VARCHAR" property="reserveOne" />
+    <result column="reserve_two" jdbcType="VARCHAR" property="reserveTwo" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+    <result column="build_userid" jdbcType="INTEGER" property="buildUserid" />
+    <result column="build_time" jdbcType="TIMESTAMP" property="buildTime" />
+    <result column="update_userid" jdbcType="INTEGER" property="updateUserid" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, company_id, he_id, dev_district_id, device_name, device_desc, device_serial, 
+    ip, port, serialno, user_name, pass_wd, channel_num, heart_time, in_out, longitude, 
+    latitude, `online`, reserve_one, reserve_two, `status`, del_flag, build_userid, build_time, 
+    update_userid, update_time, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.jzhl.plate.model.PlateDeviceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plate_device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from plate_device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from plate_device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jzhl.plate.model.PlateDeviceExample">
+    delete from plate_device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jzhl.plate.model.PlateDevice">
+    insert into plate_device (id, company_id, he_id, 
+      dev_district_id, device_name, device_desc, 
+      device_serial, ip, port, 
+      serialno, user_name, pass_wd, 
+      channel_num, heart_time, in_out, 
+      longitude, latitude, `online`, 
+      reserve_one, reserve_two, `status`, 
+      del_flag, build_userid, build_time, 
+      update_userid, update_time, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{heId,jdbcType=INTEGER}, 
+      #{devDistrictId,jdbcType=INTEGER}, #{deviceName,jdbcType=VARCHAR}, #{deviceDesc,jdbcType=VARCHAR}, 
+      #{deviceSerial,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{port,jdbcType=INTEGER}, 
+      #{serialno,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{passWd,jdbcType=VARCHAR}, 
+      #{channelNum,jdbcType=INTEGER}, #{heartTime,jdbcType=TIMESTAMP}, #{inOut,jdbcType=INTEGER}, 
+      #{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{online,jdbcType=CHAR}, 
+      #{reserveOne,jdbcType=VARCHAR}, #{reserveTwo,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{delFlag,jdbcType=CHAR}, #{buildUserid,jdbcType=INTEGER}, #{buildTime,jdbcType=TIMESTAMP}, 
+      #{updateUserid,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jzhl.plate.model.PlateDevice">
+    insert into plate_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="heId != null">
+        he_id,
+      </if>
+      <if test="devDistrictId != null">
+        dev_district_id,
+      </if>
+      <if test="deviceName != null">
+        device_name,
+      </if>
+      <if test="deviceDesc != null">
+        device_desc,
+      </if>
+      <if test="deviceSerial != null">
+        device_serial,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="port != null">
+        port,
+      </if>
+      <if test="serialno != null">
+        serialno,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="passWd != null">
+        pass_wd,
+      </if>
+      <if test="channelNum != null">
+        channel_num,
+      </if>
+      <if test="heartTime != null">
+        heart_time,
+      </if>
+      <if test="inOut != null">
+        in_out,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="online != null">
+        `online`,
+      </if>
+      <if test="reserveOne != null">
+        reserve_one,
+      </if>
+      <if test="reserveTwo != null">
+        reserve_two,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="buildUserid != null">
+        build_userid,
+      </if>
+      <if test="buildTime != null">
+        build_time,
+      </if>
+      <if test="updateUserid != null">
+        update_userid,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="heId != null">
+        #{heId,jdbcType=INTEGER},
+      </if>
+      <if test="devDistrictId != null">
+        #{devDistrictId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceName != null">
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceDesc != null">
+        #{deviceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSerial != null">
+        #{deviceSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null">
+        #{port,jdbcType=INTEGER},
+      </if>
+      <if test="serialno != null">
+        #{serialno,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWd != null">
+        #{passWd,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null">
+        #{channelNum,jdbcType=INTEGER},
+      </if>
+      <if test="heartTime != null">
+        #{heartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inOut != null">
+        #{inOut,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="online != null">
+        #{online,jdbcType=CHAR},
+      </if>
+      <if test="reserveOne != null">
+        #{reserveOne,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveTwo != null">
+        #{reserveTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="buildUserid != null">
+        #{buildUserid,jdbcType=INTEGER},
+      </if>
+      <if test="buildTime != null">
+        #{buildTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null">
+        #{updateUserid,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jzhl.plate.model.PlateDeviceExample" resultType="java.lang.Long">
+    select count(*) from plate_device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update plate_device
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.heId != null">
+        he_id = #{record.heId,jdbcType=INTEGER},
+      </if>
+      <if test="record.devDistrictId != null">
+        dev_district_id = #{record.devDistrictId,jdbcType=INTEGER},
+      </if>
+      <if test="record.deviceName != null">
+        device_name = #{record.deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceDesc != null">
+        device_desc = #{record.deviceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceSerial != null">
+        device_serial = #{record.deviceSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null">
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.port != null">
+        port = #{record.port,jdbcType=INTEGER},
+      </if>
+      <if test="record.serialno != null">
+        serialno = #{record.serialno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passWd != null">
+        pass_wd = #{record.passWd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelNum != null">
+        channel_num = #{record.channelNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.heartTime != null">
+        heart_time = #{record.heartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.inOut != null">
+        in_out = #{record.inOut,jdbcType=INTEGER},
+      </if>
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.latitude != null">
+        latitude = #{record.latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.online != null">
+        `online` = #{record.online,jdbcType=CHAR},
+      </if>
+      <if test="record.reserveOne != null">
+        reserve_one = #{record.reserveOne,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserveTwo != null">
+        reserve_two = #{record.reserveTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.delFlag != null">
+        del_flag = #{record.delFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.buildUserid != null">
+        build_userid = #{record.buildUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.buildTime != null">
+        build_time = #{record.buildTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserid != null">
+        update_userid = #{record.updateUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update plate_device
+    set id = #{record.id,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=INTEGER},
+      he_id = #{record.heId,jdbcType=INTEGER},
+      dev_district_id = #{record.devDistrictId,jdbcType=INTEGER},
+      device_name = #{record.deviceName,jdbcType=VARCHAR},
+      device_desc = #{record.deviceDesc,jdbcType=VARCHAR},
+      device_serial = #{record.deviceSerial,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      port = #{record.port,jdbcType=INTEGER},
+      serialno = #{record.serialno,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      pass_wd = #{record.passWd,jdbcType=VARCHAR},
+      channel_num = #{record.channelNum,jdbcType=INTEGER},
+      heart_time = #{record.heartTime,jdbcType=TIMESTAMP},
+      in_out = #{record.inOut,jdbcType=INTEGER},
+      longitude = #{record.longitude,jdbcType=DECIMAL},
+      latitude = #{record.latitude,jdbcType=DECIMAL},
+      `online` = #{record.online,jdbcType=CHAR},
+      reserve_one = #{record.reserveOne,jdbcType=VARCHAR},
+      reserve_two = #{record.reserveTwo,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=CHAR},
+      del_flag = #{record.delFlag,jdbcType=CHAR},
+      build_userid = #{record.buildUserid,jdbcType=INTEGER},
+      build_time = #{record.buildTime,jdbcType=TIMESTAMP},
+      update_userid = #{record.updateUserid,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jzhl.plate.model.PlateDevice">
+    update plate_device
+    <set>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="heId != null">
+        he_id = #{heId,jdbcType=INTEGER},
+      </if>
+      <if test="devDistrictId != null">
+        dev_district_id = #{devDistrictId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceName != null">
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceDesc != null">
+        device_desc = #{deviceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSerial != null">
+        device_serial = #{deviceSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null">
+        port = #{port,jdbcType=INTEGER},
+      </if>
+      <if test="serialno != null">
+        serialno = #{serialno,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWd != null">
+        pass_wd = #{passWd,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null">
+        channel_num = #{channelNum,jdbcType=INTEGER},
+      </if>
+      <if test="heartTime != null">
+        heart_time = #{heartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inOut != null">
+        in_out = #{inOut,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="online != null">
+        `online` = #{online,jdbcType=CHAR},
+      </if>
+      <if test="reserveOne != null">
+        reserve_one = #{reserveOne,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveTwo != null">
+        reserve_two = #{reserveTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="buildUserid != null">
+        build_userid = #{buildUserid,jdbcType=INTEGER},
+      </if>
+      <if test="buildTime != null">
+        build_time = #{buildTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null">
+        update_userid = #{updateUserid,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jzhl.plate.model.PlateDevice">
+    update plate_device
+    set company_id = #{companyId,jdbcType=INTEGER},
+      he_id = #{heId,jdbcType=INTEGER},
+      dev_district_id = #{devDistrictId,jdbcType=INTEGER},
+      device_name = #{deviceName,jdbcType=VARCHAR},
+      device_desc = #{deviceDesc,jdbcType=VARCHAR},
+      device_serial = #{deviceSerial,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      port = #{port,jdbcType=INTEGER},
+      serialno = #{serialno,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      pass_wd = #{passWd,jdbcType=VARCHAR},
+      channel_num = #{channelNum,jdbcType=INTEGER},
+      heart_time = #{heartTime,jdbcType=TIMESTAMP},
+      in_out = #{inOut,jdbcType=INTEGER},
+      longitude = #{longitude,jdbcType=DECIMAL},
+      latitude = #{latitude,jdbcType=DECIMAL},
+      `online` = #{online,jdbcType=CHAR},
+      reserve_one = #{reserveOne,jdbcType=VARCHAR},
+      reserve_two = #{reserveTwo,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=CHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      build_userid = #{buildUserid,jdbcType=INTEGER},
+      build_time = #{buildTime,jdbcType=TIMESTAMP},
+      update_userid = #{updateUserid,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
